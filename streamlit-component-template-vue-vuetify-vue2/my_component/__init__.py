@@ -9,6 +9,7 @@ from spacy.lang.en import English
 from spacy.tokenizer import Tokenizer
 import numpy as np
 import string
+import docx2txt
 
 nlpSpacy = English()
 nlpSpacy.add_pipe('sentencizer')
@@ -64,8 +65,15 @@ def my_component(sentences, labels, key=None):
     component_value = _component_func(sentences=sentences, labels=labels, key=key, default=0)
     return component_value
 
-
+docx_file = st.file_uploader("Upload your document",type=['txt','docx'])
+st.write('Or')
 sentences = st.text_area("Type in your text")
+if docx_file is not None:
+  if docx_file.type == "text/plain":
+    sentences = str(docx_file.read(),"utf-8")
+  elif docx_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    sentences = docx2txt.process(docx_file) # Parse in the uploadFile Class directory
+
 data = []
 finalSentences = []
 finalLabels = []

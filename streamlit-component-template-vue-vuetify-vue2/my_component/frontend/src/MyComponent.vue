@@ -14,13 +14,13 @@
         </template>
         <span v-if="args.labels[i] === 1">Model classified sentence as suspicious, but no relevant claims were found</span>
         <span v-else>
-          <v-row>
+          <v-row class="mb-n3">
             <v-col cols="9">Claim</v-col>
             <v-col cols="3">Rating</v-col>
           </v-row>
-          <v-row v-for="(claim, index) in args.labels[i].slice(0,5)" :key="claim['text']" :class="getClasses(index, i)">
-            <v-col cols="9">{{claim.text}}</v-col>
-            <v-col cols="3">{{claim.claimReview.length > 0 ? claim.claimReview[0].textualRating : ''}}</v-col>
+          <v-row v-for="claim in args.labels[i].slice(0,5)" :key="claim['text']" class="my-n2">
+            <v-col cols="8">{{claim.text}}</v-col>
+            <v-col cols="4"><p class="truncate-overflow">{{claim.claimReview.length > 0 ? claim.claimReview[0].textualRating : ''}}</p></v-col>
           </v-row>
         </span>
        </v-tooltip>
@@ -54,10 +54,23 @@ export default {
   updated() {
     this.$nextTick(function () {
     const element = document.getElementById('highlighted-text-container').getBoundingClientRect();
-    console.log(element);
-    Streamlit.setFrameHeight(element.height);
+    const lastIndex = this.args.labels.length - 1;
+    let additionalHeight = 0;
+    if (Array.isArray(this.args.labels[lastIndex])) {
+      additionalHeight = 500;
+    }
+    Streamlit.setFrameHeight(element.height + additionalHeight);
   })
   }
 };
 </script>
+<style>
+.truncate-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+</style>
 

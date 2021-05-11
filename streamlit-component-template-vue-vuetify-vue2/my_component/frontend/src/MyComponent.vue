@@ -1,12 +1,6 @@
 <template>
   <v-main class="wrapper" fill-height>
-    <!-- 
-      Show a button and some text.
-      When the button is clicked, we'll increment our "numClicks" state
-      variable, and send its new value back to Streamlit, where it'll
-      be available to the Python program.
-    -->
-    <v-card flat class="ml-2 mt-1" max-width="694" fill-height>
+    <v-card id="highlighted-text-container" flat class="ml-2 mt-1" max-width="694" fill-height>
       <span v-for="(s, i) in args.sentences" :key="i">
        <span v-if="args.labels[i]==0">{{s}}</span>
        <v-tooltip v-else bottom>
@@ -44,17 +38,9 @@ export default {
   props: ["args"], // Arguments that are passed to the plugin in Python are accessible in props `args`. Here, we access the "name" arg.
   data() {
     return {
-      numClicks: 0
     };
   },
   methods: {
-    /** Click handler for our "Click Me!" button. */
-    onClicked: function() {
-      // Increment this.numClicks, and pass the new value back to
-      // Streamlit via `Streamlit.setComponentValue`.
-      this.numClicks++;
-      Streamlit.setComponentValue(this.numClicks);
-    },
     getClasses: function(i, sI) {
       if (i == 0 && i == this.args.labels[sI].slice(0,5).length -1) {
         return 'my-1'
@@ -64,6 +50,13 @@ export default {
         return 'mb-1'
       } else return ''
     }
+  },
+  updated() {
+    this.$nextTick(function () {
+    const element = document.getElementById('highlighted-text-container').getBoundingClientRect();
+    console.log(element);
+    Streamlit.setFrameHeight(element.height);
+  })
   }
 };
 </script>

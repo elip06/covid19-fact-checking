@@ -45,10 +45,6 @@ export default Vue.extend({
       this.onRenderEvent
     );
     Streamlit.setComponentReady();
-    Streamlit.setFrameHeight(800);
-  },
-  updated(): void {
-    Streamlit.setFrameHeight(800)
   },
   destroyed(): void {
     Streamlit.events.removeEventListener(

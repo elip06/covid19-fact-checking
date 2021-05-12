@@ -15,8 +15,8 @@
         <span v-if="args.labels[i] === 1">Model classified sentence as suspicious, but no relevant claims were found</span>
         <span v-else>
           <v-row class="mb-n3">
-            <v-col cols="9">Claim</v-col>
-            <v-col cols="3">Rating</v-col>
+            <v-col cols="8">Claim</v-col>
+            <v-col cols="4">Rating</v-col>
           </v-row>
           <v-row v-for="claim in args.labels[i].slice(0,5)" :key="claim['text']" class="my-n2">
             <v-col cols="8">{{claim.text}}</v-col>

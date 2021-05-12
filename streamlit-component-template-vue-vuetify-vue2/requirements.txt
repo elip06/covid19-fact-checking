@@ -1,0 +1,8 @@
+streamlit>=0.63
+docx2txt>=0.8
+transformers>=4.5.1
+torch>=1.8.1
+requests>=2.25.1
+pandas>=1.2.4
+spacy==3.0.5
+numpy>=1.19.5

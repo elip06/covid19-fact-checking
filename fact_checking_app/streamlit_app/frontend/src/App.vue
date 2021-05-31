@@ -1,18 +1,18 @@
 <!-- 
   We bootstrap our Component to Streamlit with our scoped slot in the top-level App.
-  This is where scoped slot passes Streamlit ;`args` data from itself to children MyComponent.
+  This is where scoped slot passes Streamlit ;`args` data from itself to children HighlightedText.
   You should not have to edit this, but are free to do so :)
 -->
 <template>
   <v-app id="app">
     <WithStreamlitConnection style="height: 100%" v-slot="{ args }">
-      <MyComponent :args="args" />
+      <HighlightedText :args="args" />
     </WithStreamlitConnection>
   </v-app>
 </template>
 
 <script>
-import MyComponent from "./MyComponent.vue";
+import HighlightedText from "./HighlightedText.vue";
 
 // "withStreamlitConnection" is a scoped slot. It bootstraps the
 // connection between your component and the Streamlit app, and handles
@@ -23,7 +23,7 @@ import WithStreamlitConnection from "./streamlit/WithStreamlitConnection.vue";
 
 export default {
   name: "App",
-  components: { MyComponent, WithStreamlitConnection }
+  components: { HighlightedText, WithStreamlitConnection }
 };
 </script>
 

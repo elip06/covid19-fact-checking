@@ -21,7 +21,7 @@ $ pip install -r requirements.txt # install all needed packages
 - Initialize and run the component template frontend:
 
 ```
-$ cd my_component/frontend
+$ cd streamlit_app/frontend
 $ npm install    # Install npm dependencies
 $ npm run serve  # Start the Webpack dev server
 ```
@@ -30,7 +30,7 @@ $ npm run serve  # Start the Webpack dev server
 
 ```
 $ . venv/bin/activate  # activate the venv you created earlier
-$ streamlit run my_component/__init__.py  # run the example
+$ streamlit run streamlit_app/__init__.py  # run the example
 ```
 
 - If all goes well, you should see something like this:
@@ -42,10 +42,10 @@ $ streamlit run my_component/__init__.py  # run the example
 - Hover over any highlighted sentence to see which relevant claims were found:
   ![Relevant claims](claiminfo.png)
 
-- Modify the frontend code at `my_component/frontend/src/MyComponent.vue`.
+- Modify the frontend code at `streamlit_app/frontend/src/HighlightedText.vue`.
   - Parameters passed by Python script are made available in `args` props.
-- Modify the Python code at `my_component/__init__.py`.
-- Feel free to rename the `my_component` folder, `MyComponent.vue` file with its import in `App.vue`, and package name in `setup.py` and `package.json`.
+- Modify the Python code at `streamlit_app/__init__.py`.
+- Feel free to rename the `streamlit_app` folder, `HighlightedText.vue` file with its import in `App.vue`, and package name in `package.json`.
 
 ## Resources
 

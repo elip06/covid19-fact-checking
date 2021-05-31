@@ -34,7 +34,7 @@
 import { Streamlit } from "streamlit-component-lib";
 
 export default {
-  name: "MyComponent",
+  name: "HighlightedText",
   props: ["args"], // Arguments that are passed to the plugin in Python are accessible in props `args`. Here, we access the "name" arg.
   data() {
     return {

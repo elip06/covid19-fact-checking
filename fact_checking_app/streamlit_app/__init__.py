@@ -6,9 +6,6 @@ import requests
 import json
 import pandas as pd
 from spacy.lang.en import English
-from spacy.tokenizer import Tokenizer
-import numpy as np
-import string
 import docx2txt
 
 nlpSpacy = English()
@@ -32,14 +29,14 @@ _RELEASE = False
 
 if not _RELEASE:
     _component_func = components.declare_component(
-        "my_component",
+        "vue_component",
         url="http://localhost:3001",
     )
 else:
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     build_dir = os.path.join(parent_dir, "frontend/dist")
     _component_func = components.declare_component(
-        "my_component", path=build_dir)
+        "vue_component", path=build_dir)
 
 # Create a wrapper function for the component. This is an optional
 # best practice - we could simply expose the component function returned by
@@ -61,7 +58,7 @@ class CovidDataset(torch.utils.data.Dataset):
         return len(self.labels)
 
 
-def my_component(sentences, labels, key=None):
+def vue_component(sentences, labels, key=None):
     component_value = _component_func(sentences=sentences, labels=labels, key=key, default=0)
     return component_value
 
@@ -119,4 +116,4 @@ st.markdown("---")
 # it is considered a new instance and will be re-mounted on the frontend
 # and lose its current state. In this case, we want to vary the component's
 # "name" argument without having it get recreated.
-num_clicks = my_component(sentences=finalSentences, labels=finalLabels, key="foo")
+num_clicks = vue_component(sentences=finalSentences, labels=finalLabels, key="foo")

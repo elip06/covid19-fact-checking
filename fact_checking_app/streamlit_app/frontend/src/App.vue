@@ -23,12 +23,11 @@ import WithStreamlitConnection from "./streamlit/WithStreamlitConnection.vue";
 
 export default {
   name: "App",
-  components: { HighlightedText, WithStreamlitConnection }
+  components: { HighlightedText, WithStreamlitConnection },
 };
 </script>
 
 <style>
-
 #app {
   font-family: IBM Plex Sans, sans-serif;
   -webkit-font-smoothing: antialiased;

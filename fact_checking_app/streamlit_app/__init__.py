@@ -11,8 +11,9 @@ import docx2txt
 
 nlpSpacy = English()
 nlpSpacy.add_pipe('sentencizer')
+nlpSpacy.Defaults.stop_words |= {"we", "a", "the", "this"}
 all_stopwords = nlpSpacy.Defaults.stop_words
-
+api_key="AIzaSyCDkPw22qbilLXdoQFey-JHfVv0MP5_Hhw"
 
 _RELEASE = False
 
@@ -109,10 +110,10 @@ if sentences != '':
             tokens_without_sw = [
                 word for word in tokens if not word in all_stopwords]
             sent = '%20'.join(tokens_without_sw)
-            query = "https://factchecktools.googleapis.com/v1alpha1/claims:search?query={}&key=AIzaSyCDkPw22qbilLXdoQFey-JHfVv0MP5_Hhw".format(
-                sent)
+            query = "https://factchecktools.googleapis.com/v1alpha1/claims:search?query={}&key={}".format(
+                sent, api_key)
             r = requests.get(query)
-            if json.loads(r.text):
+            if json.loads(r.text) and 'claims' in json.loads(r.text):
                 finalLabels.append(json.loads(r.text)['claims'])
             else:
                 finalLabels.append(int(result))

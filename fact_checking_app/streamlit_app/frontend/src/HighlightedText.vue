@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       trueValues: ["true", "accurate", "unbiased", "correct"],
-      mostlyTrueValues: ["mostly true","half true", "one pinocchio"],
+      mostlyTrueValues: ["mostly true", "half true", "one pinocchio"],
       mixtureValues: ["mixture", "two pinocchios", "biased", "cherry-picking", "not the whole story", "exaggerates"],
       mostlyFalseValues: ["mostly false", "three pinocchios", "misleading"],
       falseValues: [

@@ -85,8 +85,8 @@ if sentences != '':
         data.append([sent.text, 0])
         finalSentences.append(sent.text)
     df = pd.DataFrame(data, columns=['text', 'labels'])
-    tokenizer_bert = DistilBertTokenizer.from_pretrained("bert-base-uncased")
-    test_encodings = tokenizer_bert(
+    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+    test_encodings = tokenizer(
         df.text.values.tolist(), truncation=True, padding=True)
     X_test = CovidDataset(test_encodings, df.labels.values.tolist())
     parent_dir = os.path.dirname(os.path.abspath(__file__))

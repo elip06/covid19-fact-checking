@@ -2,8 +2,8 @@
 
 [Streamlit Vue.js + Vuetify Component template](https://github.com/elip06/streamlit-component-template-vue-vuetify)
 
-Check any COVID-19 related document for potentially dubious claims and validate them using the Google Fact Check Tool
-
+Check any COVID-19 related document for potentially dubious claims and validate them using the Google Fact Check Tool 
+In order to use the Google API, you need to generate an API key and save it into the `api_key` variable in the file [__init__.py](https://github.com/elip06/covid19-fact-checking/blob/main/fact_checking_app/streamlit_app/__init__.py) 
 ## Setup
 
 [Copy paste](https://github.com/streamlit/component-template#quickstart) of the original component-template quickstart.

@@ -13,7 +13,8 @@ nlpSpacy = English()
 nlpSpacy.add_pipe('sentencizer')
 nlpSpacy.Defaults.stop_words |= {"we", "a", "the", "this"}
 all_stopwords = nlpSpacy.Defaults.stop_words
-api_key="AIzaSyCDkPw22qbilLXdoQFey-JHfVv0MP5_Hhw"
+# set your Google API key here
+api_key=""
 
 
 # run npm run build in the frontend directory and set _RELEASE to true, if you do not plan to change the frontend component

@@ -1,5 +1,8 @@
 # Bachelor thesis project on the topic of Fact checking using trusted knowledge bases
-
-The work is done on the COVID-19 domain
-
-For a quick tutorial on how to start and use the fact-checking app, go to [the Streamlit app directory](https://github.com/elip06/claim-verification-thesis/tree/main/fact_checking_app)
+Particularly during a time of a global pandemic, it is crucial to find efficient ways of determining the credibility of information. From fake news to conspiracy theories, it is hard to fight the “infodemic” which eventually makes the pandemic even more dangerous. Currently, fact-checking websites such as Snopes, FactCheck.org, etc. perform manual claim validation from articles, speeches, or even social media posts from known figures, etc. Of course, they cannot cover all the dubious claims that can be found on the internet, as they focus mainly on
+the ones that "go viral". For the general user, however, it is impossible to fact check every single statement or sentence on a specific topic he finds on the internet.
+A lot of research has been invested in both claim verification and fact-check-worthiness, but there is no work done yet on the detection and extraction of dubious claims, combined with their fact checking using external information sources, such as knowledge graphs and knowledge bases, especially on the COVID-19 domain. The solution to this problem is a two-step claim
+verification procedure, consisting of sequence classification using Transformer models and fact checking using the Google Fact Check Tools. The goal of this work is to develop a high-performance component for fact checking of small- to medium-sized documents in English language on the topic of COVID-19.
+We curate a dataset from existing COVID-19 related datasets and perform multiple preprocessing steps to ensure all the data is uniform. The data pre-processing procedure and the final datasets can be found [here](https://github.com/elip06/covid19-fact-checking/tree/main/dataset_preparation).
+The training code for 4 Transformer models and a simple LSTM (as a baseline) is available [here](https://github.com/elip06/covid19-fact-checking/tree/main/training).
+For a quick tutorial on how to start and use the fact-checking app, go to [the Streamlit app directory](https://github.com/elip06/covid19-fact-checking/tree/main/fact_checking_app).

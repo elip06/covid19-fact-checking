@@ -37,10 +37,10 @@ $ streamlit run streamlit_app/__init__.py  # run the example
   ![Quickstart Success](quickstart.png)
 
 - Upload or paste your text to see all dubious claims:
-  ![Fact-checked text](highlightedtext.png)
+  ![Fact-checked text](covid_text_highlighted.png)
 
 - Hover over any highlighted sentence to see which relevant claims were found:
-  ![Relevant claims](claiminfo.png)
+  ![Relevant claims](tooltip_text.png)
 
 - Modify the frontend code at `streamlit_app/frontend/src/HighlightedText.vue`.
   - Parameters passed by Python script are made available in `args` props.

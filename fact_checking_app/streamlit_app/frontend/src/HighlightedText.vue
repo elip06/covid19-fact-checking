@@ -115,6 +115,7 @@ export default {
         return "mb-1";
       } else return "";
     },
+    // calculate the final veracity of the claim using the reviews of relevant claims and map the final value to a color
     calculateColor: function(reviews) {
       if (reviews == 1) {
         return "cyan lighten-4";
@@ -133,6 +134,7 @@ export default {
         return average ? this.colorMapping[average] : "cyan lighten-4";
       }
     },
+    // look for keywords in the textual rating and map to a numerical one
     determineRating: function(textualRating) {
       if (this.mostlyTrueValues.find((v) => textualRating.includes(v))) {
         return 4;
@@ -150,6 +152,7 @@ export default {
     },
   },
   updated() {
+    // update the height of the component depending on the text size
     this.$nextTick(function() {
       const element = document
         .getElementById("highlighted-text-container")

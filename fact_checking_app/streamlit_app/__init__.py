@@ -15,6 +15,8 @@ nlpSpacy.Defaults.stop_words |= {"we", "a", "the", "this"}
 all_stopwords = nlpSpacy.Defaults.stop_words
 api_key="AIzaSyCDkPw22qbilLXdoQFey-JHfVv0MP5_Hhw"
 
+
+# run npm run build in the frontend directory and set _RELEASE to true, if you do not plan to change the frontend component
 _RELEASE = False
 
 # Declare a Streamlit component. `declare_component` returns a function
@@ -46,6 +48,7 @@ else:
 # output value, and add a docstring for users.
 
 
+# the custom dataset class
 class CovidDataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
         self.encodings = encodings
@@ -70,6 +73,8 @@ def vue_component(sentences, labels, key=None):
 docx_file = st.file_uploader("Upload your document", type=['txt', 'docx'])
 st.write('Or')
 sentences = st.text_area("Type in your text")
+
+# read the text document into the sentences variable
 if docx_file is not None:
     if docx_file.type == "text/plain":
         sentences = str(docx_file.read(), "utf-8")
@@ -77,18 +82,24 @@ if docx_file is not None:
         # Parse in the uploadFile Class directory
         sentences = docx2txt.process(docx_file)
 
-data = []
-finalSentences = []
-finalLabels = []
+data = [] # an array of text+label pairs, since we do not know the true labels of each sentence, we just set the labels to 0
+
+finalSentences = [] # an array of the sentences, used later in the frontend component
+finalResults = [] # an array of the final results - 0 for regular sentences, for suspicious sentences - 1, if no relevant claims are found or an array of relevant claims, if there are any 
 if sentences != '':
+    # parse text into sentences
     for sent in nlpSpacy(sentences).sents:
         data.append([sent.text, 0])
         finalSentences.append(sent.text)
+    # save sentences and placeholder labels to dataframe
     df = pd.DataFrame(data, columns=['text', 'labels'])
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+    # tokenize sentences
     test_encodings = tokenizer(
         df.text.values.tolist(), truncation=True, padding=True)
+    # create dataset
     X_test = CovidDataset(test_encodings, df.labels.values.tolist())
+    # fetch fine-tuned model and config
     parent_dir = os.path.dirname(os.path.abspath(__file__))
     config = DistilBertConfig.from_json_file(
         os.path.join(parent_dir, 'model/config.json'))
@@ -97,11 +108,12 @@ if sentences != '':
     trainer = Trainer(
         model=model,
     )
-
+    # make predictions
     results = trainer.predict(test_dataset=X_test).predictions.argmax(-1)
     for i, result in enumerate(results):
         if (result == 0 and df.text.values.tolist()[i] != ''):
-            finalLabels.append(int(result))
+            finalResults.append(int(result))
+        # for suspicious sentences: simplify sentence and send GET request to Google API
         elif (df.text.values.tolist()[i] != '' and result == 1):
             text_tokens = nlpSpacy.tokenizer(df.text.values.tolist()[i])
             tokens_without_punct = [
@@ -113,20 +125,18 @@ if sentences != '':
             query = "https://factchecktools.googleapis.com/v1alpha1/claims:search?query={}&key={}".format(
                 sent, api_key)
             r = requests.get(query)
+            # if there are relevant claims found, save them in finalResults
             if json.loads(r.text) and 'claims' in json.loads(r.text):
-                finalLabels.append(json.loads(r.text)['claims'])
+                finalResults.append(json.loads(r.text)['claims'])
             else:
-                finalLabels.append(int(result))
+                finalResults.append(int(result))
 
 st.markdown("---")
 
-# Create a second instance of our component whose `name` arg will vary
-# based on a text_input widget.
-#
 # We use the special "key" argument to assign a fixed identity to this
 # component instance. By default, when a component's arguments change,
 # it is considered a new instance and will be re-mounted on the frontend
 # and lose its current state. In this case, we want to vary the component's
-# "name" argument without having it get recreated.
+# "arguments without having it get recreated.
 frontend_component = vue_component(sentences=finalSentences,
-                           labels=finalLabels, key="foo")
+                           labels=finalResults, key="foo")
